@@ -43,60 +43,58 @@ class HomeScreen extends StatelessWidget {
                     return _buildEmptyState(context);
                   }
                   else {
-                    return Expanded(
-                      child: SingleChildScrollView(
-                        controller: controller.listController.value,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            (controller.lastViewedUser.value?.name ?? '').isNotEmpty
-                            ? Padding(
+                    return SingleChildScrollView(
+                      controller: controller.listController.value,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          (controller.lastViewedUser.value?.name ?? '').isNotEmpty
+                          ? Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                      child: Text(
+                        '${appStrings.lastuser}',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyLarge
+                            ?.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ):SizedBox(),
+                          (controller.lastViewedUser.value?.name ?? '').isNotEmpty
+                                        ?  UserCard(
+                              user: controller.lastViewedUser.value??UserModel(),
+                              onTap: ()  {
+                                controller.saveLastUser(controller.lastViewedUser.value??UserModel());
+                                Get.toNamed(RoutesClass.gotoDetailsScreen(), arguments: {
+                                  'data': controller.lastViewedUser.value??UserModel(),
+                                });
+
+                              },
+                            ):  SizedBox(),
+
+                          (controller.filteredUserList.isNotEmpty)
+                              ?  Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                        child: Text(
-                          '${appStrings.lastuser}',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyLarge
-                              ?.copyWith(fontWeight: FontWeight.bold),
-                        ),
-                      ):SizedBox(),
-                            (controller.lastViewedUser.value?.name ?? '').isNotEmpty
-                    ?  UserCard(
-                                user: controller.lastViewedUser.value??UserModel(),
+                            child: Text('${appStrings.user}',
+                              style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold)),
+                          ): SizedBox(),
+                          ListView.builder(
+                            itemCount: controller.filteredUserList.length,
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return UserCard(
+                                user: controller.filteredUserList[index],
                                 onTap: ()  {
-                                  controller.saveLastUser(controller.lastViewedUser.value??UserModel());
+                                  controller.saveLastUser(controller.filteredUserList[index]);
                                   Get.toNamed(RoutesClass.gotoDetailsScreen(), arguments: {
-                                    'data': controller.lastViewedUser.value??UserModel(),
+                                    'data': controller.filteredUserList[index],
                                   });
 
                                 },
-                              ):  SizedBox(),
-
-                            (controller.filteredUserList.isNotEmpty)
-                                ?  Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                              child: Text('${appStrings.user}',
-                                style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold)),
-                            ): SizedBox(),
-                            ListView.builder(
-                              itemCount: controller.filteredUserList.length,
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return UserCard(
-                                  user: controller.filteredUserList[index],
-                                  onTap: ()  {
-                                    controller.saveLastUser(controller.filteredUserList[index]);
-                                    Get.toNamed(RoutesClass.gotoDetailsScreen(), arguments: {
-                                      'data': controller.filteredUserList[index],
-                                    });
-                        
-                                  },
-                                );
-                              },
-                            ),
-                          ],
-                        ),
+                              );
+                            },
+                          ),
+                        ],
                       ),
                     );
                   }
