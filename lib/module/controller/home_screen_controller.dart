@@ -58,6 +58,8 @@ class HomeScreenController extends GetxController {
       Get.context?.loaderOverlay.hide();
     });
   }
+
+
   Future<void> getMoreUserData() async {
     _apiService.getUserList(pageNo.value.toString(), results.value.toString()).then((value) {
         if (value.isNotEmpty??false) {
@@ -76,6 +78,8 @@ class HomeScreenController extends GetxController {
       isMoreDataAvailable(false);
     });
   }
+
+
   void saveLastUser(UserModel user) async {
     await Utils.setSharedPrefValueJson(AppConst.LastUser, jsonEncode(user.toJson()));
     lastViewedUser.value = user;
