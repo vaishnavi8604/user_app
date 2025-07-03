@@ -6,6 +6,9 @@ Clone the repository:
 git clone https://github.com/vaishnavi8604/user_app.git
 cd user_app
 Install dependencies:
+flutter pub get
+Run the app:
+flutter run
 
 Approach
 1. Pagination
