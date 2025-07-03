@@ -64,21 +64,6 @@ class HomeScreen extends StatelessWidget {
                     ?  UserCard(
                                 user: controller.lastViewedUser.value??UserModel(),
                                 onTap: ()  {
-                                  // var name = await Utils.getSharedPrefValue(AppConst.UserName);
-                                  // var email = await Utils.getSharedPrefValueEmail(AppConst.UserEmail);
-                                  // var phone = await Utils.getSharedPrefValuePhone(AppConst.UserPhone);
-                                  // var photo = await Utils.getSharedPrefValuePhoto(AppConst.UserPhoto);
-                                  // var address = await Utils.getSharedPrefValueAddress(AppConst.UserAddress);
-                                  // var zip = await Utils.getSharedPrefValueZip(AppConst.UserZip);
-                                  // var state = await Utils.getSharedPrefValueState(AppConst.UserState);
-                                  // var country = await Utils.getSharedPrefValueCountry(AppConst.UserCountry);
-                                  // var company = await Utils.getSharedPrefValueCompany(AppConst.UserCompany);
-                                  // var data = UserModel(
-                                  //   name: name
-                                  // );
-                                  // Get.toNamed(RoutesClass.gotoDetailsScreen(), arguments: {
-                                  //   'data': data,
-                                  // });
                                   controller.saveLastUser(controller.lastViewedUser.value??UserModel());
                                   Get.toNamed(RoutesClass.gotoDetailsScreen(), arguments: {
                                     'data': controller.lastViewedUser.value??UserModel(),
@@ -87,23 +72,23 @@ class HomeScreen extends StatelessWidget {
                                 },
                               ):  SizedBox(),
 
-                            (controller.userList.value.isNotEmpty)
+                            (controller.filteredUserList.isNotEmpty)
                                 ?  Padding(
                               padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                               child: Text('${appStrings.user}',
                                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold)),
                             ): SizedBox(),
                             ListView.builder(
-                              itemCount: controller.userList.length,
+                              itemCount: controller.filteredUserList.length,
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index) {
                                 return UserCard(
-                                  user: controller.userList[index],
+                                  user: controller.filteredUserList[index],
                                   onTap: ()  {
-                                    controller.saveLastUser(controller.userList[index]);
+                                    controller.saveLastUser(controller.filteredUserList[index]);
                                     Get.toNamed(RoutesClass.gotoDetailsScreen(), arguments: {
-                                      'data': controller.userList[index],
+                                      'data': controller.filteredUserList[index],
                                     });
                         
                                   },

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -44,7 +46,6 @@ class HomeScreenController extends GetxController {
     isLoading(true);
     Get.context?.loaderOverlay.show();
     _apiService.getUserList(pageNo.value.toString(), results.value.toString()).then((value) {
-
         userList.clear();
       userList.addAll(value as Iterable<UserModel>);
         loadLastUser();
@@ -68,7 +69,6 @@ class HomeScreenController extends GetxController {
         userList.addAll(value as Iterable<UserModel>);
         loadLastUser();
         isMoreDataAvailable(false);
-        
     }).onError((error, stackTrace) {
       isMoreDataAvailable(false);
       setUserApiError(error.toString());
@@ -76,26 +76,23 @@ class HomeScreenController extends GetxController {
       isMoreDataAvailable(false);
     });
   }
-
   void saveLastUser(UserModel user) async {
-    await Utils.setSharedPrefValue(AppConst.UserName,user.name??'');
+    await Utils.setSharedPrefValueJson(AppConst.LastUser, jsonEncode(user.toJson()));
     lastViewedUser.value = user;
-    loadLastUser();
   }
   void loadLastUser() async {
-    final name = await Utils.getSharedPrefValue(AppConst.UserName);
-    if (name != null) {
-      final user = userList.firstWhereOrNull((u) => u.name == name);
-      print("luser.name ${name}");
-        if (user != null) {
-          userList.removeWhere((u) => u.name == name);
-          lastViewedUser.value = user;
-        }
-        else {
-        final lastUser = UserModel(id: -1, name: name);
-        lastViewedUser.value = lastUser;
+    final userJson = await Utils.getSharedPrefValueJson(AppConst.LastUser);
+    if (userJson != null) {
+      try {
+        final user = UserModel.fromJson(jsonDecode(userJson));
+        lastViewedUser.value = user;
+      } catch (e) {
+        print('Error loading last user: $e');
       }
     }
   }
-
+  List<UserModel> get filteredUserList {
+    final lastUserName = lastViewedUser.value?.name;
+    return userList.where((u) => u.name != lastUserName).toList();
+  }
 }
