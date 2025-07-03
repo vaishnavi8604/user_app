@@ -3,7 +3,7 @@ This Flutter app displays a paginated list of employees from a mock API. It uses
 
 🚀 How to Run the App
 Clone the repository:
-git clone https://github.com/your-username/your-flutter-app.git
+git clone https://github.com/vaishnavi8604/user_app.git
 cd user_app
 Install dependencies:
 
