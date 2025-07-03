@@ -49,40 +49,50 @@ class HomeScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                              child: Text('${appStrings.lastuser}',style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold)),
-                            ),
-                            UserCard(
-                              user: controller.lastViewedUser.value??UserModel(),
-                              onTap: ()  {
-                                // var name = await Utils.getSharedPrefValue(AppConst.UserName);
-                                // var email = await Utils.getSharedPrefValueEmail(AppConst.UserEmail);
-                                // var phone = await Utils.getSharedPrefValuePhone(AppConst.UserPhone);
-                                // var photo = await Utils.getSharedPrefValuePhoto(AppConst.UserPhoto);
-                                // var address = await Utils.getSharedPrefValueAddress(AppConst.UserAddress);
-                                // var zip = await Utils.getSharedPrefValueZip(AppConst.UserZip);
-                                // var state = await Utils.getSharedPrefValueState(AppConst.UserState);
-                                // var country = await Utils.getSharedPrefValueCountry(AppConst.UserCountry);
-                                // var company = await Utils.getSharedPrefValueCompany(AppConst.UserCompany);
-                                // var data = UserModel(
-                                //   name: name
-                                // );
-                                // Get.toNamed(RoutesClass.gotoDetailsScreen(), arguments: {
-                                //   'data': data,
-                                // });
-                                controller.saveLastUser(controller.lastViewedUser.value??UserModel());
-                                Get.toNamed(RoutesClass.gotoDetailsScreen(), arguments: {
-                                  'data': controller.lastViewedUser.value??UserModel(),
-                                });
-                        
-                              },
-                            ),
-                            Padding(
+                            (controller.lastViewedUser.value?.name ?? '').isNotEmpty
+                            ? Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                        child: Text(
+                          '${appStrings.lastuser}',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge
+                              ?.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                      ):SizedBox(),
+                            (controller.lastViewedUser.value?.name ?? '').isNotEmpty
+                    ?  UserCard(
+                                user: controller.lastViewedUser.value??UserModel(),
+                                onTap: ()  {
+                                  // var name = await Utils.getSharedPrefValue(AppConst.UserName);
+                                  // var email = await Utils.getSharedPrefValueEmail(AppConst.UserEmail);
+                                  // var phone = await Utils.getSharedPrefValuePhone(AppConst.UserPhone);
+                                  // var photo = await Utils.getSharedPrefValuePhoto(AppConst.UserPhoto);
+                                  // var address = await Utils.getSharedPrefValueAddress(AppConst.UserAddress);
+                                  // var zip = await Utils.getSharedPrefValueZip(AppConst.UserZip);
+                                  // var state = await Utils.getSharedPrefValueState(AppConst.UserState);
+                                  // var country = await Utils.getSharedPrefValueCountry(AppConst.UserCountry);
+                                  // var company = await Utils.getSharedPrefValueCompany(AppConst.UserCompany);
+                                  // var data = UserModel(
+                                  //   name: name
+                                  // );
+                                  // Get.toNamed(RoutesClass.gotoDetailsScreen(), arguments: {
+                                  //   'data': data,
+                                  // });
+                                  controller.saveLastUser(controller.lastViewedUser.value??UserModel());
+                                  Get.toNamed(RoutesClass.gotoDetailsScreen(), arguments: {
+                                    'data': controller.lastViewedUser.value??UserModel(),
+                                  });
+
+                                },
+                              ):  SizedBox(),
+
+                            (controller.userList.value.isNotEmpty)
+                                ?  Padding(
                               padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                               child: Text('${appStrings.user}',
                                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold)),
-                            ),
+                            ): SizedBox(),
                             ListView.builder(
                               itemCount: controller.userList.length,
                               shrinkWrap: true,

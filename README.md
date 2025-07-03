@@ -1,13 +1,13 @@
 Employee Directory App (Flutter + GetX)
 This Flutter app displays a paginated list of employees from a mock API. It uses GetX for state management, handles loading and error states, and stores the last viewed employee using SharedPreferences.
 
-🚀 How to Run the App
+How to Run the App
 Clone the repository:
 git clone https://github.com/vaishnavi8604/user_app.git
 cd user_app
 Install dependencies:
 
-🧠 Approach
+Approach
 1. Pagination
    Used a ScrollController to detect when the user scrolls near the bottom of the list.
 
