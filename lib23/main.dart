@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
         builder:(context,child){
           return MediaQuery(data: MediaQuery.of(context).copyWith(textScaler: TextScaler.noScaling), child: child!);
         },
-        initialRoute: RoutesClass.gotoItemScreen(),
+        initialRoute: RoutesClass.gotoHomeScreen(),
       ),
     );
   }

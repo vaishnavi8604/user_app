@@ -3,20 +3,17 @@ import 'package:user_app/module/binding/details_screen_binding.dart';
 import 'package:user_app/module/binding/home_screen_binding.dart';
 import 'package:user_app/module/views/details_screen.dart';
 import 'package:user_app/module/views/home_screen.dart';
-import 'package:user_app/module/views/order_list_screen.dart';
 
 
 class RoutesClass {
   //RoutesName
   static String home = '/homeScreen';
   static String details = '/detailsScreen';
-  static String itemScreen = '/itemListScreen';
 
 
   //RoutesMethod
   static String gotoHomeScreen() => home;
   static String gotoDetailsScreen() => details;
-  static String gotoItemScreen() => itemScreen;
 
 
   //RoutesPage
@@ -34,12 +31,6 @@ class RoutesClass {
         transition: Transition.rightToLeftWithFade,
         transitionDuration: const Duration(milliseconds: 300),
         binding: DetailsScreenBinding()
-    ),
-    GetPage(
-        name: itemScreen,
-        page: () =>  ItemListScreen(),
-        transition: Transition.rightToLeftWithFade,
-        transitionDuration: const Duration(milliseconds: 300),
     ),
   ];
 }
